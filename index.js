@@ -16,25 +16,46 @@ app.post("/data", (req, res) => {
 });
 
 app.post("/profile", function (req, res) {
-  const data = {
-    name: req.body.name,
-    batch: req.body.batch,
-    email: req.body.email,
-  };
+  res.send(req.body)
 
-  res.json(data);
 });
 
+const data = {
+  name: 'jane',
+  batch: '17.2',
+  email: 'janedoe@gmail.com'
+}
+
 app.patch("/profile", function (req, res) {
-    const data = {
-      name: req.body.name,
-      batch: req.body.batch,
-      email: req.body.email,
+   
+    data ={
+      ...data,
+      ...req.body
     }
-  
-    res.json(data);
+    res.send(data)
   });
 
+  app.put('/profile',(req,res)=>{
+    if (name && batch && email) {
+      data = {
+        ...req.body
+      }
+      res.send(data)
+    }else{
+      res.send({
+        success:false,
+        message:'all form must be filled'
+      })
+    }
+  })
+
+  app.get('/profile',(res,response)=>{
+    res.send(data)
+  })
+  app.delete('/profile',(req,res)=>{
+    data= null
+    res.send(data)
+  })
 
   
 
